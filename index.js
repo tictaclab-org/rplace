@@ -1,3 +1,5 @@
+const PORT = process.env.PORT || 3000;
+
 const express = require("express");
 const http = require("http");
 const socket = require("socket.io");
@@ -14,12 +16,12 @@ const io = socket(server, {
 });
 
 io.on("connect", (connection) => {
-  console.log("il y a un nouveau client");
-  connection.on("modifPixel", function (data) {
-    console.log(data);
+  console.log(`New Client: ${connection.id}`);
+  connection.on("modifPixel", function ({spanId, color}) {
+    console.log(`New Message Received: ${spanId} - ${color}`);
   });
 });
 
-server.listen(3000, () => {
-  console.log("hello world");
+server.listen(PORT, () => {
+  console.log(`Server Started on Port ${PORT}`);
 });

@@ -1,7 +1,8 @@
 // var socket = io("https://rplace-server-side-margotictaclab.replit.app/");
 var socket = io("https://test-socket-timu.onrender.com/", { transports: ['websocket'] });
+// var socket = io("https://localhost:3000", { transports: ['websocket'] });
 
-socket.emit("clientEvent", "test");
+
 
 const text =
     "Bienvenue sur le r/place organisé par Artic.\n- Clic droit/maintenir appuyé = copier la couleur.\n- Molette/écarter les doigts = zoom.\n- Clic gauche/click = placement de son pixel.\n- 1 seconde entre chaque pixel.";
@@ -132,6 +133,10 @@ function whatColorDidISelect(clickedColor) {
 function updateGrid(spanId, color) {
     updatedPixel = document.getElementById(spanId);
     updatedPixel.style.background = color;
+    socket.emit("modifPixel", {
+        spanId,
+        color
+    });
 }
 
 let timerOrNot = false;
