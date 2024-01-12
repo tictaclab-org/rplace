@@ -19,6 +19,7 @@ var allPixels = {};
 
 io.on("connect", (socket) => {
   console.log(`New Client: ${socket.id}`);
+  socket.emit("pixelModified", allPixels);
   socket.on("modifPixel", function ({spanId, color}) {
     allPixels[spanId] = color;
     console.log(`New Message Received: ${spanId} - ${color}`);
