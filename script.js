@@ -182,7 +182,7 @@ function timer() {
     setTimeout(() => {
       timerOrNot = false;
       // console.log("Nouvelle valeur :", timerOrNot);
-    }, 1000);
+    }, 5000);
   }
 }
 
