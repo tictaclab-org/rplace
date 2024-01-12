@@ -23,7 +23,7 @@ io.on("connect", (socket) => {
   socket.on("modifPixel", function ({spanId, color}) {
     allPixels[spanId] = color;
     console.log(`New Message Received: ${spanId} - ${color}`);
-    socket.emit("pixelModified", allPixels);
+    io.sockets.emit("pixelModified", allPixels);
   });
 });
 
