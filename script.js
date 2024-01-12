@@ -2,8 +2,6 @@
 var socket = io("https://test-socket-timu.onrender.com/", { transports: ['websocket'] });
 // var socket = io("https://localhost:3000", { transports: ['websocket'] });
 
-
-
 const text =
     "Bienvenue sur le r/place organisé par Artic.\n- Clic droit/maintenir appuyé = copier la couleur.\n- Molette/écarter les doigts = zoom.\n- Clic gauche/click = placement de son pixel.\n- 1 seconde entre chaque pixel.";
 alert(text);
@@ -12,10 +10,15 @@ alert(text);
 const grid = document.querySelector(".grid");
 
 socket.on("connect", function () {
-    console.log(socket.id);
+    console.log(`Connected to Socket ${socket.id}`);
 });
 
-// var socket = io("https://rplace-ServerSide.rafaeldimitrov.repl.co");
+socket.on("pixelModified", function (data) {
+    Object.entries(data).forEach(([spanId, color]) => {
+        console.log("The spanId: ", spanId);
+        console.log("The color: ", color);
+    });
+})
 
 for (let i = 0; i < 10000; i++) {
     let span = document.createElement("span");
@@ -129,10 +132,14 @@ function whatColorDidISelect(clickedColor) {
 
 //copie couleur
 
-//modif des pixels
-function updateGrid(spanId, color) {
+function updatePixel(spanId, color) {
     updatedPixel = document.getElementById(spanId);
     updatedPixel.style.background = color;
+}
+
+//modif des pixels
+function updateGrid(spanId, color) {
+    updatePixel(spanId, color);
     socket.emit("modifPixel", {
         spanId,
         color

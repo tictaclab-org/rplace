@@ -15,10 +15,14 @@ const io = socket(server, {
   },
 });
 
-io.on("connect", (connection) => {
-  console.log(`New Client: ${connection.id}`);
-  connection.on("modifPixel", function ({spanId, color}) {
+var allPixels = {};
+
+io.on("connect", (socket) => {
+  console.log(`New Client: ${socket.id}`);
+  socket.on("modifPixel", function ({spanId, color}) {
+    allPixels[spanId] = color;
     console.log(`New Message Received: ${spanId} - ${color}`);
+    socket.emit("pixelModified", allPixels);
   });
 });
 
