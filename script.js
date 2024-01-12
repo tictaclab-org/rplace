@@ -1,7 +1,7 @@
 
 
 const text =
-  "Bienvenue sur le r/place organisé par Artic.\n- Clic droit/maintenir appuyé = copier la couleur.\n- Molette/écarter les doigts = zoom.\n- Clic gauche/click = placement de son pixel.\n- 1 seconde entre chaque pixel.";
+  "Bienvenue sur le r/place organisé par Artic.\n- Clic droit/maintenir appuyé = copier la couleur.\n- Molette/écarter les doigts = zoom.\n- Clic gauche/click = placement de son pixel.\n- 5 secondes entre chaque pixel.";
 alert(text);
 
 // creation du tableau
@@ -154,9 +154,7 @@ spans.forEach((span) => {
   span.addEventListener("click", (e) => {
     if (timerOrNot == false) {
       e.currentTarget.style.background = colorSelect;
-      let modifData = { [e.currentTarget.id] : colorSelect };
 
-			console.log(modifData);
       socket.emit("modifPixel", {spanId: e.currentTarget.id, color: colorSelect});
 
       timerOrNot = true;
@@ -226,12 +224,3 @@ function updateZoom() {
   document.getElementById("zoomedDiv").style.transform =
     "scale(" + zoomLevel + ")";
 }
-
-// const chat_interface = readline.createInterface({
-//   input: process.stdin,
-//   output: process.stdout,
-// });
-// chat_interface.question("> ", function (message) {
-//   console.log(message);
-//   socket.emit("message", message);
-// });
